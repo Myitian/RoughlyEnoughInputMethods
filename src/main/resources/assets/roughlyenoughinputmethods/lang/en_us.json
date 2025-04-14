@@ -1,0 +1,5 @@
+{
+  "text.roughlyenoughinputmethods.input.methods.pinyin": "REIM %s",
+  "text.roughlyenoughinputmethods.input.methods.pinyin.allow-incomplete": "Allow Incomplete",
+  "text.roughlyenoughinputmethods.input.methods.pinyin.allow-vu-fuzzy": "Allow u to ü Fuzzy"
+}

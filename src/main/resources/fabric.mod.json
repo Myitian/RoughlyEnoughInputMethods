@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "roughlyenoughinputmethods",
+  "version": "${version}",
+  "name": "RoughlyEnoughInputMethods",
+  "description": "Add a better pinyin input method for REI.",
+  "authors": [
+    "Myitian"
+  ],
+  "contact": {
+    "sources": "https://github.com/Myitian/RoughlyEnoughInputMethods"
+  },
+  "license": "MIT",
+  "icon": "assets/roughlyenoughinputmethods/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.myitian.roughlyenoughinputmethods.RoughlyEnoughInputMethodsClient"
+    ],
+    "rei_client": [
+      "net.myitian.roughlyenoughinputmethods.RoughlyEnoughInputMethodsClient"
+    ]
+  },
+  "depends": {
+    "roughlyenoughitems": [
+      "^9.1.580",
+      ">=10.0.581"
+    ]
+  }
+}
