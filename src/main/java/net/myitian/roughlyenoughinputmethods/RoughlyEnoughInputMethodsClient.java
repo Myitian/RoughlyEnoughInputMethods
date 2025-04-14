@@ -6,8 +6,6 @@ import me.shedaniel.rei.api.client.search.method.InputMethodRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.minecraft.util.Identifier;
 import net.myitian.roughlyenoughinputmethods.inputmethods.PinyinInputMethod;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,7 +13,6 @@ import java.nio.file.Files;
 public class RoughlyEnoughInputMethodsClient implements ClientModInitializer, REIClientPlugin {
     public static final String MOD_ID = "roughlyenoughinputmethods";
     public static final String REI_ID = "roughlyenoughitems";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
     public static final Identifier IMPinyin = new Identifier(MOD_ID, "pinyin");
 
     @Override

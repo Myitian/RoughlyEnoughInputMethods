@@ -161,7 +161,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                 allowVUFuzzy = properties.getOrDefault(
                         "AllowVUFuzzy", "false").equals("true");
                 for (IntList key : this.fuzzyMap.keySet()) {
-                    if (properties.getOrDefault("Fuzzy:" + new String(key.toIntArray(), 0, key.size()), "false").equals("true")) {
+                    if (properties.getOrDefault("Fuzzy_" + new String(key.toIntArray(), 0, key.size()), "false").equals("true")) {
                         this.fuzzySet.add(key);
                     }
                 }

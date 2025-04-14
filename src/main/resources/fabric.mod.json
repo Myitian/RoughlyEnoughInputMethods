@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "roughlyenoughinputmethods",
   "version": "${version}",
-  "name": "RoughlyEnoughInputMethods",
+  "name": "Roughly Enough Input Methods",
   "description": "Add a better pinyin input method for REI.",
   "authors": [
     "Myitian"
