@@ -1,5 +1,8 @@
 package net.myitian.roughlyenoughinputmethods;
 
+// Based on me.shedaniel.rei.impl.client.search.method.unihan.UniHanManager
+// MIT License
+
 import me.shedaniel.rei.api.client.search.method.InputMethod;
 import me.shedaniel.rei.impl.common.InternalLogger;
 import org.apache.commons.io.IOUtils;
@@ -17,13 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.zip.ZipInputStream;
 
-public class UniHanManager {
-    private final Path unihanPath;
-
-    public UniHanManager(Path unihanPath) {
-        this.unihanPath = unihanPath;
-    }
-
+public record UniHanManager(Path unihanPath) {
     public boolean downloaded() {
         return Files.exists(unihanPath);
     }
@@ -72,12 +69,8 @@ public class UniHanManager {
         }
     }
 
-    public Path getUnihanPath() {
-        return unihanPath;
-    }
-
     public void load(DataConsumer consumer) throws IOException {
-        try (ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(getUnihanPath()))) {
+        try (ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(unihanPath()))) {
             while (inputStream.getNextEntry() != null) {
                 read(IOUtils.lineIterator(inputStream, StandardCharsets.UTF_8), consumer);
             }

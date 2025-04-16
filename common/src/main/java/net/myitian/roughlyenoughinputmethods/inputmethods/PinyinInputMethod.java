@@ -1,5 +1,7 @@
 package net.myitian.roughlyenoughinputmethods.inputmethods;
 
+// Based on me.shedaniel.rei.impl.client.search.method.unihan.PinyinInputMethod
+// MIT License
 
 import dev.architectury.platform.Platform;
 import dev.architectury.utils.value.BooleanValue;
@@ -21,7 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
-import static net.myitian.roughlyenoughinputmethods.RoughlyEnoughInputMethodsClient.MOD_ID;
+import static net.myitian.roughlyenoughinputmethods.RoughlyEnoughInputMethods.MOD_ID;
 
 public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnpackingInputMethod {
     protected static final Map<IntList, List<IntList>> incompleteInitialsFinals = new HashMap<>();

@@ -1,5 +1,8 @@
 package net.myitian.roughlyenoughinputmethods.inputmethods;
 
+// Based on me.shedaniel.rei.impl.client.search.method.unihan.UniHanInputMethod
+// MIT License
+
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntList;
