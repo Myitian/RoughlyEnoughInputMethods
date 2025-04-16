@@ -15,6 +15,10 @@ configurations {
     developmentForge.extendsFrom common
 }
 
+base {
+    archivesName = rootProject.archives_base_name + "-forge"
+}
+
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
     modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei_version}"
