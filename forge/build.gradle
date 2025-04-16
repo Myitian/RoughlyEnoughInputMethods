@@ -17,7 +17,7 @@ configurations {
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    modImplementation "me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei_version}"
+    modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }

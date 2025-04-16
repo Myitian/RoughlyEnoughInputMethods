@@ -4,7 +4,7 @@ architectury {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modImplementation "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
+    modApi "me.shedaniel:RoughlyEnoughItems-api:${project.rei_version}"
 }
 
 publishing {
