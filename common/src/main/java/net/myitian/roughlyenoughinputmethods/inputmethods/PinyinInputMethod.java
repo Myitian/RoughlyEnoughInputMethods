@@ -405,7 +405,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
     public void load() {
         try {
             manager.load((codepoint, fieldKey, data) -> {
-                HashSet<String> strSet = new HashSet<>(4);
+                ArrayList<String> strSet = new ArrayList<>(4);
                 int start, end;
                 switch (fieldKey) {
                     case "kMandarin":
@@ -439,7 +439,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                         }
                         break;
                 }
-                List<CharacterUnpackingInputMethod.ExpendedChar> sequences = dataMap.computeIfAbsent(codepoint, value -> new ArrayList<>(strSet.size()));
+                List<CharacterUnpackingInputMethod.ExpendedChar> sequences = dataMap.computeIfAbsent(codepoint, value -> new ArrayList<>(strSet.length()));
                 for (String string : strSet) {
                     sequences.addAll(asExpendedChars(string));
                 }
