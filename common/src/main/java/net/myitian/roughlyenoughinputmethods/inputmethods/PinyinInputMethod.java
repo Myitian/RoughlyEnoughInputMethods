@@ -12,7 +12,9 @@ import me.shedaniel.rei.api.client.favorites.FavoriteMenuEntry;
 import me.shedaniel.rei.api.client.search.method.CharacterUnpackingInputMethod;
 import me.shedaniel.rei.api.client.search.method.InputMethod;
 import me.shedaniel.rei.api.common.util.CollectionUtils;
+import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.myitian.roughlyenoughinputmethods.UniHanManager;
 
 import java.io.IOException;
@@ -215,20 +217,20 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
 
     @Override
     public Text getName() {
-        return Text.translatable("text.roughlyenoughinputmethods.input.methods.pinyin",
-                Text.translatable("text.rei.input.methods.pinyin"));
+        return new TranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin",
+                new TranslatableText("text.rei.input.methods.pinyin"));
     }
 
     @Override
     public Text getDescription() {
-        return Text.translatable("text.rei.input.methods.pinyin.description");
+        return new TranslatableText("text.rei.input.methods.pinyin.description");
     }
 
     @Override
     public List<FavoriteMenuEntry> getOptionsMenuEntries() {
         List<FavoriteMenuEntry> innerEntries = new ArrayList<>();
         innerEntries.add(FavoriteMenuEntry.createToggle(
-                Text.translatable("text.roughlyenoughinputmethods.input.methods.pinyin.allow-incomplete"),
+                new TranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin.allow-incomplete"),
                 new BooleanValue() {
                     @Override
                     public void accept(boolean b) {
@@ -244,7 +246,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                     }
                 }));
         innerEntries.add(FavoriteMenuEntry.createToggle(
-                Text.translatable("text.roughlyenoughinputmethods.input.methods.pinyin.allow-vu-fuzzy"),
+                new TranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin.allow-vu-fuzzy"),
                 new BooleanValue() {
                     @Override
                     public void accept(boolean b) {
@@ -260,7 +262,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                     }
                 }));
         this.fuzzyMap.forEach((from, to) -> {
-            innerEntries.add(FavoriteMenuEntry.createToggle(Text.literal("%s -> %s".formatted(new String(from.toIntArray(), 0, from.size()), new String(to.toIntArray(), 0, to.size()))),
+            innerEntries.add(FavoriteMenuEntry.createToggle(new LiteralText("%s -> %s".formatted(new String(from.toIntArray(), 0, from.size()), new String(to.toIntArray(), 0, to.size()))),
                     new BooleanValue() {
                         @Override
                         public boolean getAsBoolean() {
@@ -280,7 +282,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                         }
                     }));
         });
-        return List.of(FavoriteMenuEntry.createSubMenu(Text.translatable("text.rei.input.methods.pinyin.fuzzy.matching"),
+        return List.of(FavoriteMenuEntry.createSubMenu(new TranslatableText("text.rei.input.methods.pinyin.fuzzy.matching"),
                 innerEntries));
     }
 

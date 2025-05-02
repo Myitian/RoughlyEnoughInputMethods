@@ -25,15 +25,15 @@ public record UniHanManager(Path unihanPath) {
         return Files.exists(unihanPath);
     }
 
-    public void download(InputMethod.ProgressCallback progressCallback) {
+    public void download() {
         try {
-            download("https://shedaniel.moe/qntrML0EraNB.zip", progressCallback);
+            download("https://shedaniel.moe/qntrML0EraNB.zip");
         } catch (Exception e) {
-            download("https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip", progressCallback);
+            download("https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip");
         }
     }
 
-    public void download(String URL, InputMethod.ProgressCallback progressCallback) {
+    public void download(String URL) {
         if (downloaded()) return;
         try {
             java.net.URL url = new URL(URL);
@@ -57,7 +57,6 @@ public record UniHanManager(Path unihanPath) {
                     lastPercent = percent;
                     InternalLogger.getInstance().debug("Downloading UniHan Progress: %d%%".formatted(percent));
                 }
-                progressCallback.onProgress(progress);
                 bufferedStream.write(data, 0, x);
             }
             bufferedStream.close();

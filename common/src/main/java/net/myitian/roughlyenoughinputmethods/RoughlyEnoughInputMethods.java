@@ -11,7 +11,7 @@ import java.nio.file.Files;
 public final class RoughlyEnoughInputMethods {
     public static final String MOD_ID = "roughlyenoughinputmethods";
     public static final String REI_ID = "roughlyenoughitems";
-    public static final Identifier IMPinyin = Identifier.of(MOD_ID, "pinyin");
+    public static final Identifier IMPinyin = new Identifier(MOD_ID, "pinyin");
 
     public static void init() {
         try {

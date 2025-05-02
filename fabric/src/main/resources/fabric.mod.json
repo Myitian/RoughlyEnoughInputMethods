@@ -22,9 +22,6 @@
     ]
   },
   "depends": {
-    "roughlyenoughitems": [
-      "^9.1.580",
-      ">=10.0.581"
-    ]
+    "roughlyenoughitems": "^8.3.519"
   }
 }
