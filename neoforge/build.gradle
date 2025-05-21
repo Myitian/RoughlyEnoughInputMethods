@@ -20,12 +20,12 @@ base {
 }
 
 dependencies {
-    forge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
     modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-neoforge:${project.rei_version}"
     modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 }
 
 processResources {
@@ -69,4 +69,10 @@ publishing {
     }
     repositories {
     }
+}
+
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = "UTF-8"
+    options.release = 21
 }

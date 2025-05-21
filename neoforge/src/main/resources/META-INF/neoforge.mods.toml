@@ -14,6 +14,6 @@ logoFile = "assets/roughlyenoughinputmethods/logo.png"
 [[dependencies.roughlyenoughinputmethods]]
 modId = "roughlyenoughitems"
 mandatory = true
-versionRange = "[9.1.580,10.0),[10.0.581,)"
+versionRange = "[8.3.519,9),[9.1.520,)"
 ordering = "AFTER"
 side = "CLIENT"
