@@ -9,7 +9,7 @@ displayName = "${mod_name}"
 displayURL = "${mod_source}"
 authors = "${mod_author}"
 description = "${mod_description}"
-logoFile = "assets/roughlyenoughinputmethods/logo.png"
+logoFile = "${mod_icon}"
 
 [[dependencies.${mod_id}]]
 modId = "roughlyenoughitems"

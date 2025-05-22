@@ -69,7 +69,6 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
     };
 
     static {
-        incompleteInitialsFinals.put(IntList.of("zh".codePoints().toArray()), List.of(IntList.of("z".codePoints().toArray())));
         incompleteInitialsFinals.put(IntList.of('z', 'h'), List.of(IntList.of('z')));
         incompleteInitialsFinals.put(IntList.of('s', 'h'), List.of(IntList.of('s')));
         incompleteInitialsFinals.put(IntList.of('c', 'h'), List.of(IntList.of('c')));
@@ -447,7 +446,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
         }
         tmpMap.forEach((codepoint, strSet) -> {
             List<CharacterUnpackingInputMethod.ExpendedChar> sequences
-                    = dataMap.computeIfAbsent(codepoint, value -> new ArrayList<>(strSet.size()));
+                    = dataMap.computeIfAbsent(codepoint, value -> new ArrayList<>());
             for (String string : strSet) {
                 sequences.addAll(asExpendedChars(string));
             }
@@ -458,7 +457,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
         public final int codepoint;
         public final int tone;
 
-        private ToneEntry(int codepoint, int tone) {
+        public ToneEntry(int codepoint, int tone) {
             this.codepoint = codepoint;
             this.tone = tone;
         }
