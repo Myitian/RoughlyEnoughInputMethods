@@ -27,10 +27,7 @@ subprojects {
 
     dependencies {
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
-        mappings loom.layered {
-            it.mappings("net.fabricmc:yarn:$project.yarn_mappings:v2")
-            it.mappings("dev.architectury:yarn-mappings-patch-neoforge:$project.yarn_mappings_patch_neoforge_version")
-        }
+        mappings "net.fabricmc:yarn:$project.yarn_mappings:v2"
     }
 }
 

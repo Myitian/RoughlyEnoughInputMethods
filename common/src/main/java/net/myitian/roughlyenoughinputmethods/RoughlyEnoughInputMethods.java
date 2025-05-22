@@ -3,6 +3,7 @@ package net.myitian.roughlyenoughinputmethods;
 import dev.architectury.platform.Platform;
 import me.shedaniel.rei.api.client.search.method.InputMethodRegistry;
 import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.myitian.roughlyenoughinputmethods.inputmethods.PinyinInputMethod;
 import net.myitian.roughlyenoughinputmethods.inputmethods.PinyinInputMethodNew;
@@ -16,7 +17,7 @@ public final class RoughlyEnoughInputMethods {
     public static final String MOD_ID = "roughlyenoughinputmethods";
     public static final String REI_ID = "roughlyenoughitems";
     public static final Logger LOGGER = LoggerFactory.getLogger("RoughlyEnoughInputMethods");
-    public static final Identifier IMPinyin = Identifier.of(MOD_ID, "pinyin");
+    public static final Identifier IMPinyin = new Identifier(MOD_ID, "pinyin");
 
     public static void init() {
         try {
@@ -40,10 +41,10 @@ public final class RoughlyEnoughInputMethods {
     }
 
     public static Text createTranslatableText(String key) {
-        return Text.translatable(key);
+        return new TranslatableText(key);
     }
 
     public static Text createTranslatableText(String key, Object... args) {
-        return Text.translatable(key, args);
+        return new TranslatableText(key, args);
     }
 }
