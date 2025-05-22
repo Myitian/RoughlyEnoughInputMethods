@@ -17,5 +17,5 @@ A mod that fixes https://github.com/shedaniel/RoughlyEnoughItems/issues/1440.
 ![](.github/2.png)
 
 ## Supported REI Versions 支持的REI版本
-- \>= 9.1.580 and < 10
-- \>= 10.0.581
+- \>= 8.3.519 and < 9
+- \>= 9.1.520

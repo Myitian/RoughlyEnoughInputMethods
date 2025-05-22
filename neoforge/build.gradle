@@ -4,7 +4,7 @@ plugins {
 
 architectury {
     platformSetupLoomIde()
-    fabric()
+    neoForge()
 }
 
 configurations {
@@ -12,32 +12,32 @@ configurations {
     shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
     compileClasspath.extendsFrom common
     runtimeClasspath.extendsFrom common
-    developmentFabric.extendsFrom common
+    developmentNeoForge.extendsFrom common
 }
 
 base {
-    archivesName = rootProject.mod_id + "-fabric"
+    archivesName = rootProject.mod_id + "-neoforge"
 }
 
 dependencies {
-    modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modApi "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
-    modApi "me.shedaniel:RoughlyEnoughItems-api-fabric:${project.rei_version}"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-fabric:${project.rei_version}"
+    neoForge "net.neoforged:neoforge:${rootProject.neoforge_version}"
+    modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-neoforge:${project.rei_version}"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-neoforge:${project.rei_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
-    shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionNeoForge")) { transitive = false }
 }
 
 processResources {
     inputs.properties props
 
-    filesMatching("fabric.mod.json") {
+    filesMatching(["META-INF/pack.mcmeta", "META-INF/*mods.toml"]) {
         expand props
     }
 }
 
 shadowJar {
+    exclude "fabric.mod.json"
     exclude "architectury.common.json"
     configurations = [project.configurations.shadowCommon]
     archiveClassifier = "dev-shadow"
@@ -62,7 +62,7 @@ components.java {
 
 publishing {
     publications {
-        mavenFabric(MavenPublication) {
+        mavenForge(MavenPublication) {
             artifactId = rootProject.mod_id + "-" + project.name
             from components.java
         }

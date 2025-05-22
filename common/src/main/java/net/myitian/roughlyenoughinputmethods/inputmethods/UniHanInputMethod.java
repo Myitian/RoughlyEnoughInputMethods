@@ -17,7 +17,7 @@ import java.util.concurrent.Executor;
 
 public abstract class UniHanInputMethod implements InputMethod<IntList> {
     protected final UniHanManager manager;
-    protected Int2ObjectMap<List<CharacterUnpackingInputMethod.ExpendedChar>> dataMap = new Int2ObjectOpenHashMap<>();
+    public Int2ObjectMap<List<CharacterUnpackingInputMethod.ExpendedChar>> dataMap = new Int2ObjectOpenHashMap<>();
 
     public UniHanInputMethod(UniHanManager manager) {
         this.manager = manager;
@@ -26,7 +26,7 @@ public abstract class UniHanInputMethod implements InputMethod<IntList> {
     @Override
     public CompletableFuture<Void> prepare(Executor executor) {
         return dispose(executor)
-                .thenRunAsync(() -> manager.download(), executor)
+                .thenRunAsync(() -> manager.download(p->{}), executor)
                 .thenRunAsync(this::load, executor);
     }
 

@@ -16,7 +16,7 @@ configurations {
 }
 
 base {
-    archivesName = rootProject.archives_base_name + "-forge"
+    archivesName = rootProject.mod_id + "-forge"
 }
 
 dependencies {
@@ -29,10 +29,10 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.properties props
 
-    filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
+    filesMatching(["META-INF/pack.mcmeta", "META-INF/mods.toml"]) {
+        expand props
     }
 }
 
@@ -63,7 +63,7 @@ components.java {
 publishing {
     publications {
         mavenForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = rootProject.mod_id + "-" + project.name
             from components.java
         }
     }

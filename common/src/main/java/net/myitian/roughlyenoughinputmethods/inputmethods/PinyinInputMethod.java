@@ -12,9 +12,7 @@ import me.shedaniel.rei.api.client.favorites.FavoriteMenuEntry;
 import me.shedaniel.rei.api.client.search.method.CharacterUnpackingInputMethod;
 import me.shedaniel.rei.api.client.search.method.InputMethod;
 import me.shedaniel.rei.api.common.util.CollectionUtils;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.myitian.roughlyenoughinputmethods.UniHanManager;
 
 import java.io.IOException;
@@ -26,6 +24,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 import static net.myitian.roughlyenoughinputmethods.RoughlyEnoughInputMethods.MOD_ID;
+import static net.myitian.roughlyenoughinputmethods.RoughlyEnoughInputMethods.createTranslatableText;
 
 public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnpackingInputMethod {
     protected static final Map<IntList, List<IntList>> incompleteInitialsFinals = new HashMap<>();
@@ -70,7 +69,6 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
     };
 
     static {
-        incompleteInitialsFinals.put(IntList.of("zh".codePoints().toArray()), List.of(IntList.of("z".codePoints().toArray())));
         incompleteInitialsFinals.put(IntList.of('z', 'h'), List.of(IntList.of('z')));
         incompleteInitialsFinals.put(IntList.of('s', 'h'), List.of(IntList.of('s')));
         incompleteInitialsFinals.put(IntList.of('c', 'h'), List.of(IntList.of('c')));
@@ -96,14 +94,13 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
     }
 
     protected final Map<IntList, IntList> fuzzyMap = new LinkedHashMap<>();
-    protected final Int2ObjectMap<ToneEntry> toneMap;
+    protected final Int2ObjectMap<ToneEntry> toneMap = new Int2ObjectOpenHashMap<>();
     protected final Set<IntList> fuzzySet = new HashSet<>();
     protected boolean allowIncompleteInitialsFinals = false;
     protected boolean allowVUFuzzy = false;
 
     public PinyinInputMethod(UniHanManager manager) {
         super(manager);
-        toneMap = new Int2ObjectOpenHashMap<>();
         addTone('ā', "a1");
         addTone('á', "a2");
         addTone('ǎ', "a3");
@@ -217,20 +214,20 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
 
     @Override
     public Text getName() {
-        return new TranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin",
-                new TranslatableText("text.rei.input.methods.pinyin"));
+        return createTranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin",
+                createTranslatableText("text.rei.input.methods.pinyin"));
     }
 
     @Override
     public Text getDescription() {
-        return new TranslatableText("text.rei.input.methods.pinyin.description");
+        return createTranslatableText("text.rei.input.methods.pinyin.description");
     }
 
     @Override
     public List<FavoriteMenuEntry> getOptionsMenuEntries() {
         List<FavoriteMenuEntry> innerEntries = new ArrayList<>();
         innerEntries.add(FavoriteMenuEntry.createToggle(
-                new TranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin.allow-incomplete"),
+                createTranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin.allow-incomplete"),
                 new BooleanValue() {
                     @Override
                     public void accept(boolean b) {
@@ -246,7 +243,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                     }
                 }));
         innerEntries.add(FavoriteMenuEntry.createToggle(
-                new TranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin.allow-vu-fuzzy"),
+                createTranslatableText("text.roughlyenoughinputmethods.input.methods.pinyin.allow-vu-fuzzy"),
                 new BooleanValue() {
                     @Override
                     public void accept(boolean b) {
@@ -262,7 +259,7 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                     }
                 }));
         this.fuzzyMap.forEach((from, to) -> {
-            innerEntries.add(FavoriteMenuEntry.createToggle(new LiteralText("%s -> %s".formatted(new String(from.toIntArray(), 0, from.size()), new String(to.toIntArray(), 0, to.size()))),
+            innerEntries.add(FavoriteMenuEntry.createToggle(Text.of("%s -> %s".formatted(new String(from.toIntArray(), 0, from.size()), new String(to.toIntArray(), 0, to.size()))),
                     new BooleanValue() {
                         @Override
                         public boolean getAsBoolean() {
@@ -282,7 +279,8 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                         }
                     }));
         });
-        return List.of(FavoriteMenuEntry.createSubMenu(new TranslatableText("text.rei.input.methods.pinyin.fuzzy.matching"),
+        return List.of(FavoriteMenuEntry.createSubMenu(
+                createTranslatableText("text.rei.input.methods.pinyin.fuzzy.matching"),
                 innerEntries));
     }
 
@@ -304,8 +302,8 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
             if (toneEntry == null) {
                 codepoints[0] = this.expendInitials(chars[0] + "");
             } else {
-                codepoints[0] = this.expendInitials(((char) toneEntry.codepoint()) + "");
-                tone = toneEntry.tone();
+                codepoints[0] = this.expendInitials(((char) toneEntry.codepoint) + "");
+                tone = toneEntry.tone;
             }
         }
         StringBuilder builder = new StringBuilder();
@@ -318,8 +316,8 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                 if (toneEntry == null) {
                     builder.append(c);
                 } else {
-                    builder.append((char) toneEntry.codepoint());
-                    tone = toneEntry.tone();
+                    builder.append((char) toneEntry.codepoint);
+                    tone = toneEntry.tone;
                 }
             }
         }
@@ -405,9 +403,10 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
 
     @Override
     public void load() {
+        Int2ObjectMap<HashSet<String>> tmpMap = new Int2ObjectOpenHashMap<>();
         try {
             manager.load((codepoint, fieldKey, data) -> {
-                HashSet<String> strSet = new HashSet<>(4);
+                HashSet<String> strSet = tmpMap.computeIfAbsent(codepoint, value -> new HashSet<>(4));
                 int start, end;
                 switch (fieldKey) {
                     case "kMandarin":
@@ -441,16 +440,26 @@ public class PinyinInputMethod extends UniHanInputMethod implements CharacterUnp
                         }
                         break;
                 }
-                List<CharacterUnpackingInputMethod.ExpendedChar> sequences = dataMap.computeIfAbsent(codepoint, value -> new ArrayList<>(strSet.size()));
-                for (String string : strSet) {
-                    sequences.addAll(asExpendedChars(string));
-                }
             });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        tmpMap.forEach((codepoint, strSet) -> {
+            List<CharacterUnpackingInputMethod.ExpendedChar> sequences
+                    = dataMap.computeIfAbsent(codepoint, value -> new ArrayList<>());
+            for (String string : strSet) {
+                sequences.addAll(asExpendedChars(string));
+            }
+        });
     }
 
-    protected record ToneEntry(int codepoint, int tone) {
+    protected static final class ToneEntry {
+        public final int codepoint;
+        public final int tone;
+
+        public ToneEntry(int codepoint, int tone) {
+            this.codepoint = codepoint;
+            this.tone = tone;
+        }
     }
 }

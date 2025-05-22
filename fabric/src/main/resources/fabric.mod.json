@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "id": "roughlyenoughinputmethods",
-  "version": "${version}",
-  "name": "Roughly Enough Input Methods",
-  "description": "Add a better pinyin input method for REI.",
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
   "authors": [
-    "Myitian"
+    "${mod_author}"
   ],
   "contact": {
-    "sources": "https://github.com/Myitian/RoughlyEnoughInputMethods"
+    "sources": "${mod_source}"
   },
-  "license": "MIT",
-  "icon": "assets/roughlyenoughinputmethods/icon.png",
+  "license": "${mod_license}",
+  "icon": "${mod_icon}",
   "environment": "client",
   "entrypoints": {
     "client": [
@@ -22,6 +22,6 @@
     ]
   },
   "depends": {
-    "roughlyenoughitems": "^8.3.519"
+    "roughlyenoughitems": "${fabric_rei_range}"
   }
 }

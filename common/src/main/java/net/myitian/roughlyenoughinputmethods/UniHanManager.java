@@ -3,7 +3,6 @@ package net.myitian.roughlyenoughinputmethods;
 // Based on me.shedaniel.rei.impl.client.search.method.unihan.UniHanManager
 // MIT License
 
-import me.shedaniel.rei.api.client.search.method.InputMethod;
 import me.shedaniel.rei.impl.common.InternalLogger;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
@@ -20,20 +19,26 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.zip.ZipInputStream;
 
-public record UniHanManager(Path unihanPath) {
+public final class UniHanManager {
+    private final Path unihanPath;
+
+    public UniHanManager(Path unihanPath) {
+        this.unihanPath = unihanPath;
+    }
+
     public boolean downloaded() {
         return Files.exists(unihanPath);
     }
 
-    public void download() {
+    public void download(ProgressCallback progressCallback) {
         try {
-            download("https://shedaniel.moe/qntrML0EraNB.zip");
+            download("https://shedaniel.moe/qntrML0EraNB.zip", progressCallback);
         } catch (Exception e) {
-            download("https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip");
+            download("https://www.unicode.org/Public/UCD/latest/ucd/Unihan.zip", progressCallback);
         }
     }
 
-    public void download(String URL) {
+    public void download(String URL, ProgressCallback progressCallback) {
         if (downloaded()) return;
         try {
             java.net.URL url = new URL(URL);
@@ -57,6 +62,7 @@ public record UniHanManager(Path unihanPath) {
                     lastPercent = percent;
                     InternalLogger.getInstance().debug("Downloading UniHan Progress: %d%%".formatted(percent));
                 }
+                progressCallback.onProgress(progress);
                 bufferedStream.write(data, 0, x);
             }
             bufferedStream.close();
@@ -69,7 +75,7 @@ public record UniHanManager(Path unihanPath) {
     }
 
     public void load(DataConsumer consumer) throws IOException {
-        try (ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(unihanPath()))) {
+        try (ZipInputStream inputStream = new ZipInputStream(Files.newInputStream(unihanPath))) {
             while (inputStream.getNextEntry() != null) {
                 read(IOUtils.lineIterator(inputStream, StandardCharsets.UTF_8), consumer);
             }
@@ -98,5 +104,10 @@ public record UniHanManager(Path unihanPath) {
     @FunctionalInterface
     public interface DataConsumer {
         void read(int codepoint, String fieldKey, String data);
+    }
+
+    @FunctionalInterface
+    public interface ProgressCallback {
+        void onProgress(double progress);
     }
 }

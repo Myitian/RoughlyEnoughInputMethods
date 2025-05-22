@@ -1,6 +1,21 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.9-SNAPSHOT" apply false
+    id "dev.architectury.loom" version "1.10-SNAPSHOT" apply false
+}
+
+ext {
+    props = [
+            mod_id          : project.mod_id,
+            mod_version     : project.mod_version,
+            mod_name        : project.mod_name,
+            mod_description : project.mod_description,
+            mod_license     : project.mod_license,
+            mod_author      : project.mod_author,
+            mod_source      : project.mod_source,
+            mod_icon        : project.mod_icon,
+            fabric_rei_range: project.fabric_rei_range,
+            forge_rei_range : project.forge_rei_range
+    ]
 }
 
 architectury {
@@ -12,8 +27,10 @@ subprojects {
 
     dependencies {
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
-        mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-        // mappings loom.officialMojangMappings()
+        mappings loom.layered {
+            it.mappings("net.fabricmc:yarn:$project.yarn_mappings:v2")
+            it.mappings("dev.architectury:yarn-mappings-patch-neoforge:$project.yarn_mappings_patch_neoforge_version")
+        }
     }
 }
 
@@ -28,9 +45,11 @@ allprojects {
     repositories {
         maven { url "https://maven.shedaniel.me" }
         maven { url "https://maven.architectury.dev" }
+        maven { url "https://maven.neoforged.net" }
+        maven { url "https://maven.parchmentmc.org" }
     }
 
-    tasks.withType(JavaCompile) {
+    tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
         options.release = 17
     }
