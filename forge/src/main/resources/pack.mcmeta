@@ -1,6 +1,6 @@
 {
   "pack": {
-    "description": "Roughly Enough Input Methods",
+    "description": "${mod_name}",
     "pack_format": 15
   }
 }

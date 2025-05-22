@@ -1,19 +1,19 @@
 modLoader = "javafml"
 loaderVersion = "[1,)"
-license = "MIT"
+license = "${mod_license}"
 
 [[mods]]
-modId = "roughlyenoughinputmethods"
-version = "${version}"
-displayName = "Roughly Enough Input Methods"
-displayURL = "https://github.com/Myitian/RoughlyEnoughInputMethods"
-authors = "Myitian"
-description = "Add a better pinyin input method for REI."
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+displayURL = "${mod_source}"
+authors = "${mod_author}"
+description = "${mod_description}"
 logoFile = "assets/roughlyenoughinputmethods/logo.png"
 
-[[dependencies.roughlyenoughinputmethods]]
+[[dependencies.${mod_id}]]
 modId = "roughlyenoughitems"
 mandatory = true
-versionRange = "[8.3.519,9),[9.1.520,)"
+versionRange = "${forge_rei_range}"
 ordering = "AFTER"
 side = "CLIENT"

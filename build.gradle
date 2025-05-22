@@ -3,6 +3,21 @@ plugins {
     id "dev.architectury.loom" version "1.10-SNAPSHOT" apply false
 }
 
+ext {
+    props = [
+            mod_id          : project.mod_id,
+            mod_version     : project.mod_version,
+            mod_name        : project.mod_name,
+            mod_description : project.mod_description,
+            mod_license     : project.mod_license,
+            mod_author      : project.mod_author,
+            mod_source      : project.mod_source,
+            mod_icon        : project.mod_icon,
+            fabric_rei_range: project.fabric_rei_range,
+            forge_rei_range : project.forge_rei_range
+    ]
+}
+
 architectury {
     minecraft = rootProject.minecraft_version
 }
@@ -13,8 +28,8 @@ subprojects {
     dependencies {
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
         mappings loom.layered {
-            it.mappings("net.fabricmc:yarn:$rootProject.yarn_mappings:v2")
-            it.mappings("dev.architectury:yarn-mappings-patch-neoforge:$rootProject.yarn_mappings_patch_neoforge_version")
+            it.mappings("net.fabricmc:yarn:$project.yarn_mappings:v2")
+            it.mappings("dev.architectury:yarn-mappings-patch-neoforge:$project.yarn_mappings_patch_neoforge_version")
         }
     }
 }
@@ -36,7 +51,7 @@ allprojects {
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
-        options.release = 16
+        options.release = 17
     }
 
     java {

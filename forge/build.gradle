@@ -16,23 +16,23 @@ configurations {
 }
 
 base {
-    archivesName = rootProject.archives_base_name + "-forge"
+    archivesName = rootProject.mod_id + "-forge"
 }
 
 dependencies {
     forge "net.minecraftforge:forge:${rootProject.forge_version}"
-    modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-forge:${project.forge_rei_version}"
-    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${project.forge_rei_version}"
+    modCompileOnlyApi "me.shedaniel:RoughlyEnoughItems-api-forge:${project.rei_version}"
+    modRuntimeOnly "me.shedaniel:RoughlyEnoughItems-forge:${project.rei_version}"
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.properties props
 
-    filesMatching("META-INF/mods.toml") {
-        expand "version": project.version
+    filesMatching(["META-INF/pack.mcmeta", "META-INF/mods.toml"]) {
+        expand props
     }
 }
 
@@ -63,7 +63,7 @@ components.java {
 publishing {
     publications {
         mavenForge(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = rootProject.mod_id + "-" + project.name
             from components.java
         }
     }

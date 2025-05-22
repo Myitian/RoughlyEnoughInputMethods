@@ -15,7 +15,7 @@ import java.nio.file.Files;
 public final class RoughlyEnoughInputMethods {
     public static final String MOD_ID = "roughlyenoughinputmethods";
     public static final String REI_ID = "roughlyenoughitems";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+    public static final Logger LOGGER = LoggerFactory.getLogger("RoughlyEnoughInputMethods");
     public static final Identifier IMPinyin = Identifier.of(MOD_ID, "pinyin");
 
     public static void init() {
@@ -30,7 +30,7 @@ public final class RoughlyEnoughInputMethods {
     public static void registerInputMethods(InputMethodRegistry registry) {
         UniHanManager manager = new UniHanManager(Platform.getConfigFolder().resolve(REI_ID + "/unihan.zip"));
         try {
-            Class.forName("me.shedaniel.rei.api.client.search.method.InputMethod.ProgressCallback");
+            Class.forName("me.shedaniel.rei.api.client.search.method.InputMethod$ProgressCallback");
             LOGGER.info("New REI detected. Using PinyinInputMethodNew...");
             registry.add(IMPinyin, new PinyinInputMethodNew(manager));
         } catch (ClassNotFoundException e) {

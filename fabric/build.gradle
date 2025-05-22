@@ -16,7 +16,7 @@ configurations {
 }
 
 base {
-    archivesName = rootProject.archives_base_name + "-fabric"
+    archivesName = rootProject.mod_id + "-fabric"
 }
 
 dependencies {
@@ -30,10 +30,10 @@ dependencies {
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.properties props
 
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand props
     }
 }
 
@@ -63,7 +63,7 @@ components.java {
 publishing {
     publications {
         mavenFabric(MavenPublication) {
-            artifactId = rootProject.archives_base_name + "-" + project.name
+            artifactId = rootProject.mod_id + "-" + project.name
             from components.java
         }
     }
